@@ -8,3 +8,5 @@ http.createServer(function(req, res){
 		res.end();
 	});
 }).listen('80');
+
+console.log("serving index.html on port 80");
