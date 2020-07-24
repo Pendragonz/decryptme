@@ -2,6 +2,7 @@ package decryptme;
 
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.servlet.RequestDispatcher;
@@ -40,17 +41,19 @@ public class Main extends HttpServlet {
 		SentenceGenerator sg = new SentenceGenerator(context);
 		
 		
-		String plaintext = sg.getSentence(NEW_WORD_CHANCE);
+		String[] plaintext = sg.getSentenceAsArray(NEW_WORD_CHANCE);
+		String[] cipher = CipherGenerator.shift(plaintext);
+		
+		String plaintextS = Arrays.toString(plaintext).replaceAll("\\[|\\]|,", "");
+		String cipherS = Arrays.toString(cipher).replaceAll("\\[|\\]|,", "");
+		
+		if(db.getCipher(plaintextS) == "") {
+			db.addCipher(plaintextS, cipherS);
+		}
+		
+        System.out.println(plaintextS);
         
-        String cipher = db.getCipher(plaintext);
-        if (cipher == "") {
-        	cipher = CipherGenerator.shift(plaintext);
-        	db.addCipher(plaintext, cipher);
-        }
-        
-        System.out.println(plaintext);
-        
-        request.setAttribute("cipher", cipher);
+        request.setAttribute("cipher", cipherS);
         RequestDispatcher rd = request.getRequestDispatcher("home.jsp");
         rd.forward(request, response);
 	}

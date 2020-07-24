@@ -9,10 +9,26 @@ public class CipherGenerator {
 	public static int SHIFT_MAX = 25;
 	
 	public static String shift(String plaintext) {
-		int len = plaintext.length();
 		int shift = random.nextInt(SHIFT_MAX - SHIFT_MIN) + SHIFT_MIN;
 		
+		return shift(plaintext, shift);
+	}
+	
+	public static String[] shift(String[] plaintext) {
+		String[] cypher = new String[plaintext.length];
+		int shift = random.nextInt(SHIFT_MAX - SHIFT_MIN) + SHIFT_MIN;
+		
+		for(int i = 0; i < plaintext.length; i++ ) {
+			cypher[i] = shift(plaintext[i], shift);
+		}
+		
+		return cypher;
+	}
+	
+	
+	public static String shift(String plaintext, int shift) {
 		StringBuilder sb = new StringBuilder();
+		int len = plaintext.length();
 		
 		for (int i = 0; i < len; i++) {
 			char c = (char)(plaintext.charAt(i) + shift);
@@ -23,8 +39,8 @@ public class CipherGenerator {
 			}
 		}
 		
-		
 		return sb.toString();
 	}
+	
 
 }
