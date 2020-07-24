@@ -15,14 +15,14 @@ public class CipherGenerator {
 	}
 	
 	public static String[] shift(String[] plaintext) {
-		String[] cypher = new String[plaintext.length];
+		String[] cipher = new String[plaintext.length];
 		int shift = random.nextInt(SHIFT_MAX - SHIFT_MIN) + SHIFT_MIN;
 		
 		for(int i = 0; i < plaintext.length; i++ ) {
-			cypher[i] = shift(plaintext[i], shift);
+			cipher[i] = shift(plaintext[i], shift);
 		}
 		
-		return cypher;
+		return cipher;
 	}
 	
 	
